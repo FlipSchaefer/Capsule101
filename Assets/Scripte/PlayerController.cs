@@ -28,13 +28,27 @@ public class PlayerController : NetworkBehaviour
     [Command]
     void CmdFire()
     {
+        // Create the Bullet from the Bullet Prefab
+        var bullet = (GameObject)Instantiate(
+            bulletPrefab,
+            bulletSpawn.position,
+            bulletSpawn.rotation);
+
+        // Add velocity to the bullet
+        bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 6;
+
+        // Spawn the bullet on the Clients
+        NetworkServer.Spawn(bullet);
+
+        // Destroy the bullet after 2 seconds
+        Destroy(bullet, 5.0f);
+
+
+        /*         
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation) as GameObject;
         Rigidbody rigidBody = bullet.GetComponent<Rigidbody>();
         rigidBody.AddForce(bullet.transform.forward * 6, ForceMode.VelocityChange);
-
-        NetworkServer.Spawn(bullet);
-
-        Destroy(bullet.gameObject, 5);
+        */
 
     }
 
