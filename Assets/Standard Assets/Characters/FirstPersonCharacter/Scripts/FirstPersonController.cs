@@ -46,16 +46,25 @@ namespace UnityStandardAssets.Characters.FirstPerson
         // Use this for initialization
         private void Start()
         {
-            m_CharacterController = GetComponent<CharacterController>();
-            m_Camera = Camera.main;
-            m_OriginalCameraPosition = m_Camera.transform.localPosition;
-            m_FovKick.Setup(m_Camera);
-            m_HeadBob.Setup(m_Camera, m_StepInterval);
-            m_StepCycle = 0f;
-            m_NextStep = m_StepCycle/2f;
-            m_Jumping = false;
-            m_AudioSource = GetComponent<AudioSource>();
-			m_MouseLook.Init(transform , m_Camera.transform);
+
+            if (!isLocalPlayer)
+            {
+                GetComponent<FirstPersonController>().enabled = false;
+                GetComponentInChildren<AudioListener>().enabled = false;
+                GetComponentInChildren<Camera>().enabled = false;
+            }
+
+                m_CharacterController = GetComponent<CharacterController>();
+                m_Camera = Camera.main;
+                m_OriginalCameraPosition = m_Camera.transform.localPosition;
+                m_FovKick.Setup(m_Camera);
+                m_HeadBob.Setup(m_Camera, m_StepInterval);
+                m_StepCycle = 0f;
+                m_NextStep = m_StepCycle / 2f;
+                m_Jumping = false;
+                m_AudioSource = GetComponent<AudioSource>();
+                m_MouseLook.Init(transform, m_Camera.transform);
+
         }
 
 
@@ -63,11 +72,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void Update()
         {
 
-            if (!isLocalPlayer)
+          /*  if (!isLocalPlayer)
             {
                 GetComponentInChildren<Camera>().enabled = false;
                 return;
-            }
+            } */
 
             RotateView();
             // the jump state needs to read here to make sure it is not missed
@@ -103,10 +112,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void FixedUpdate()
         {
 
-            if (!isLocalPlayer)
+           /* if (!isLocalPlayer)
             {
                 return;
-            }
+            } */
 
             float speed;
             GetInput(out speed);
@@ -269,5 +278,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
         }
+
     }
 }
