@@ -15,7 +15,10 @@ public class Health : NetworkBehaviour
     public void TakeDamage(int amount)
     {
         if (!isServer)
+        {
             return;
+        }
+            
 
         currentHealth -= amount;
         if (currentHealth <= 0)
@@ -28,7 +31,7 @@ public class Health : NetworkBehaviour
 
     void OnChangeHealth (int health)
     {
-        healthBar.sizeDelta = new Vector2(currentHealth, healthBar.sizeDelta.y);
+        healthBar.sizeDelta = new Vector2(health *2, healthBar.sizeDelta.y);
     }
 
 }

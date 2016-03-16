@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 
-public class PlayerController : NetworkBehaviour
+public class PlayerController_FPS : NetworkBehaviour
 {
 
     public GameObject bulletPrefab;
@@ -11,6 +11,7 @@ public class PlayerController : NetworkBehaviour
     {
         if (!isLocalPlayer)
         {
+            GetComponentInChildren<Camera>().enabled = false;
             return;
         }
 
